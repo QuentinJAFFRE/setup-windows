@@ -1,0 +1,62 @@
+{
+  "settings": {
+    "logFile": "setup-log.txt",
+    "defaultManager": "winget"
+  },
+  "categories": {
+    "film-and-music": {
+      "description": "Film & music players",
+      "apps": [
+        { "name": "VLC",                   "id": "vlc",                          "manager": "choco" },
+        { "name": "Sony Music Center",     "id": "Sony.MusicCenter",             "manager": "winget" }
+      ]
+    },
+    "gaming": {
+      "description": "Gaming & social",
+      "apps": [
+        { "name": "Steam",                 "id": "Valve.Steam",                  "manager": "winget" },
+        { "name": "Discord",               "id": "Discord.Discord",              "manager": "winget" }
+      ]
+    },
+    "dev-tools": {
+      "description": "Development tools & IDEs",
+      "apps": [
+        { "name": "PyCharm Professional",  "id": "JetBrains.PyCharm",            "manager": "winget" },
+        { "name": "Cursor",                "id": "Anysphere.Cursor",             "manager": "winget" },
+        { "name": "pyenv-win",             "id": "pyenv-win",                    "manager": "choco" },
+        { "name": "Claude Desktop",        "id": "Anthropic.Claude",             "manager": "winget" },
+        { "name": "Claude Code",           "id": "Anthropic.ClaudeCode",         "manager": "winget" },
+        { "name": "Git (includes Git Bash)", "id": "Git.Git",                    "manager": "winget" },
+        { "name": "GitHub CLI",            "id": "GitHub.cli",                   "manager": "winget" }
+      ]
+    },
+    "infra": {
+      "description": "Window management & system infra",
+      "apps": [
+        { "name": "GlazeWM",               "id": "glzr-io.glazewm",             "manager": "winget" },
+        { "name": "Desktop Fences+",        "id": "limbo666/DesktopFences",       "manager": "github", "_note": "Portable app — downloaded from GitHub releases, no installer" }
+      ]
+    },
+    "mail-and-passwords": {
+      "description": "Mail, cloud & password management",
+      "apps": [
+        { "name": "iCloud for Windows",    "id": "Apple.iCloud",                 "manager": "winget", "_note": "Legacy winget package (v7.x) — for the modern version, install from the Microsoft Store instead" },
+        { "name": "Bitwarden",             "id": "Bitwarden.Bitwarden",          "manager": "winget" }
+      ]
+    },
+    "system-utilities": {
+      "description": "System tools & utilities",
+      "apps": [
+        { "name": "7-Zip",                 "id": "7zip.7zip",                    "manager": "winget" },
+        { "name": "WinSCP",                "id": "WinSCP.WinSCP",               "manager": "winget" },
+        { "name": "PowerToys",             "id": "Microsoft.PowerToys",          "manager": "winget" },
+        { "name": "Everything Search",     "id": "voidtools.Everything",         "manager": "winget" },
+        { "name": "Tailscale",             "id": "Tailscale.Tailscale",          "manager": "winget" },
+        { "name": "WireGuard",             "id": "WireGuard.WireGuard",          "manager": "winget" },
+        { "name": "TreeSize Free",         "id": "JAMSoftware.TreeSize.Free",    "manager": "winget" },
+        { "name": "Greenshot",             "id": "greenshot",                    "manager": "choco" },
+        { "name": "Windows Terminal",      "id": "Microsoft.WindowsTerminal",    "manager": "winget" }
+      ]
+    }
+  }
+}
