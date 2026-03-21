@@ -27,7 +27,8 @@
         { "name": "Claude Desktop",        "id": "Anthropic.Claude",             "manager": "winget" },
         { "name": "Claude Code",           "id": "Anthropic.ClaudeCode",         "manager": "winget" },
         { "name": "Git (includes Git Bash)", "id": "Git.Git",                    "manager": "winget" },
-        { "name": "GitHub CLI",            "id": "GitHub.cli",                   "manager": "winget" }
+        { "name": "GitHub CLI",            "id": "GitHub.cli",                   "manager": "winget" },
+        { "name": "Docker Desktop",        "id": "Docker.DockerDesktop",         "manager": "winget" }
       ]
     },
     "infra": {
@@ -55,7 +56,8 @@
         { "name": "WireGuard",             "id": "WireGuard.WireGuard",          "manager": "winget" },
         { "name": "TreeSize Free",         "id": "JAMSoftware.TreeSize.Free",    "manager": "winget" },
         { "name": "Greenshot",             "id": "greenshot",                    "manager": "choco" },
-        { "name": "Windows Terminal",      "id": "Microsoft.WindowsTerminal",    "manager": "winget" }
+        { "name": "Windows Terminal",      "id": "Microsoft.WindowsTerminal",    "manager": "winget" },
+        { "name": "PDF24",                 "id": "geeksoftwareGmbH.PDF24Creator", "manager": "winget" }
       ]
     }
   }
