@@ -29,7 +29,8 @@
         { "name": "Git (includes Git Bash)", "id": "Git.Git",                    "manager": "winget" },
         { "name": "GitHub CLI",            "id": "GitHub.cli",                   "manager": "winget" },
         { "name": "Docker Desktop",        "id": "Docker.DockerDesktop",         "manager": "winget" },
-        { "name": "uv",                    "id": "astral-sh.uv",                 "manager": "winget" }
+        { "name": "uv",                    "id": "astral-sh.uv",                 "manager": "winget" },
+        { "name": "WSL",                   "id": "Microsoft.WSL",                "manager": "winget" }
       ]
     },
     "infra": {
