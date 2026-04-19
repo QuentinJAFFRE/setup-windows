@@ -8,7 +8,8 @@
       "description": "Film & music players",
       "apps": [
         { "name": "VLC",                   "id": "vlc",                          "manager": "choco" },
-        { "name": "Sony Music Center",     "id": "Sony.MusicCenter",             "manager": "winget" }
+        { "name": "Sony Music Center",     "id": "Sony.MusicCenter",             "manager": "winget" },
+        { "name": "ARTE Boutique Desktop Player", "id": null,                    "manager": "manual", "_note": "Requires login to download: https://support.boutique.arte.tv/hc/fr/articles/12121495408668-T%C3%A9l%C3%A9chargement-du-lecteur-hors-ligne" }
       ]
     },
     "gaming": {
@@ -29,6 +30,7 @@
         { "name": "Git (includes Git Bash)", "id": "Git.Git",                    "manager": "winget" },
         { "name": "GitHub CLI",            "id": "GitHub.cli",                   "manager": "winget" },
         { "name": "Docker Desktop",        "id": "Docker.DockerDesktop",         "manager": "winget" },
+        { "name": "Node.js",               "id": "OpenJS.NodeJS.LTS",            "manager": "winget" },
         { "name": "uv",                    "id": "astral-sh.uv",                 "manager": "winget" },
         { "name": "WSL",                   "id": "Microsoft.WSL",                "manager": "winget" }
       ]
@@ -59,7 +61,8 @@
         { "name": "TreeSize Free",         "id": "JAMSoftware.TreeSize.Free",    "manager": "winget" },
         { "name": "Greenshot",             "id": "greenshot",                    "manager": "choco" },
         { "name": "Windows Terminal",      "id": "Microsoft.WindowsTerminal",    "manager": "winget" },
-        { "name": "PDF24",                 "id": "geeksoftwareGmbH.PDF24Creator", "manager": "winget" }
+        { "name": "PDF24",                 "id": "geeksoftwareGmbH.PDF24Creator", "manager": "winget" },
+        { "name": "Freedom",               "id": "Freedom.Freedom",              "manager": "winget" }
       ]
     }
   }
