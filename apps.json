@@ -16,7 +16,8 @@
       "description": "Gaming & social",
       "apps": [
         { "name": "Steam",                 "id": "Valve.Steam",                  "manager": "winget" },
-        { "name": "Discord",               "id": "Discord.Discord",              "manager": "winget" }
+        { "name": "Discord",               "id": "Discord.Discord",              "manager": "winget" },
+        { "name": "Slack",                 "id": "SlackTechnologies.Slack",      "manager": "winget" }
       ]
     },
     "dev-tools": {
@@ -38,8 +39,7 @@
     "infra": {
       "description": "Window management & system infra",
       "apps": [
-        { "name": "GlazeWM",               "id": "glzr-io.glazewm",             "manager": "winget" },
-        { "name": "Desktop Fences+",        "id": "limbo666/DesktopFences",       "manager": "github", "_note": "Portable app — downloaded from GitHub releases, no installer" }
+        { "name": "Seelen UI",             "id": "Seelen.SeelenUI",              "manager": "winget", "_note": "Replaces GlazeWM + Desktop Fences+. Run .\\setup-seelen.ps1 after install to apply committed config." }
       ]
     },
     "mail-and-passwords": {
