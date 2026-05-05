@@ -1,3 +1,0 @@
-[2026-05-04 18:52:31] Script started. Config dir: .\seelen-config
-[2026-05-04 18:53:13] Script started. Config dir: .\seelen-config
-[2026-05-04 18:53:14] Script started. Config dir: .\seelen-config
