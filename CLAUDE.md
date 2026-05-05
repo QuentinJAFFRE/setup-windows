@@ -73,6 +73,7 @@ Each app entry specifies:
 2. Verifies scoop is installed
 3. Adds `extras` and `nerd-fonts` buckets if missing
 4. Installs every `scoop`-managed app from `apps.json` that isn't already installed
+5. Deploys dotfiles from `.\dotfiles\` into the user profile (PowerShell `$PROFILE`, starship config, yazi config). Pass `-NoConfig` to skip.
 
 **`setup-desktop.ps1`** flow:
 1. Reads `apps.json` for category/app structure
