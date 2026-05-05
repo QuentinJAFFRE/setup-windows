@@ -4,10 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a Windows PC setup automation toolkit. A single `apps.json` configuration drives the PowerShell scripts:
+This is a Windows PC setup automation toolkit. A single `apps.json` configuration drives two PowerShell scripts:
 1. `setup-apps.ps1` — installs all apps
-2. `setup-desktop.ps1` — organizes the desktop using Desktop Fences+ (legacy; kept for the previous GlazeWM + Fences setup)
-3. `setup-seelen.ps1` — applies the committed Seelen UI configuration from `seelen-config/` to `%APPDATA%\com.seelen.seelen-ui\`
+2. `setup-desktop.ps1` — organizes the desktop using Desktop Fences+
 
 ## Running the Scripts
 
@@ -34,21 +33,7 @@ All scripts require an **admin PowerShell** session on Windows 10/11.
 
 # Preview desktop config without writing
 .\setup-desktop.ps1 -DryRun
-
-# Apply committed Seelen UI config (after installing Seelen via setup-apps.ps1)
-.\setup-seelen.ps1
-
-# Preview Seelen config apply without writing
-.\setup-seelen.ps1 -DryRun
 ```
-
-## Updating the Seelen config
-
-`seelen-config/` is the committed source of truth for Seelen UI. To update it:
-1. Tune Seelen via its GUI on a working machine
-2. Close Seelen (so it flushes config to disk)
-3. Copy `%APPDATA%\com.seelen.seelen-ui\*` into `seelen-config/`
-4. Review the diff and commit
 
 ## Architecture
 

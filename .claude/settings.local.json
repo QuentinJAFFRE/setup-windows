@@ -1,9 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:seelen.io)",
       "WebSearch",
-      "WebFetch(domain:github.com)"
+      "Bash(winget uninstall *)"
     ]
   }
 }
