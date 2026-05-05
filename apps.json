@@ -36,10 +36,31 @@
       ]
     },
     "infra": {
-      "description": "Window management & system infra",
+      "description": "System infra",
       "apps": [
-        { "name": "GlazeWM",               "id": "glzr-io.glazewm",             "manager": "winget" },
         { "name": "Desktop Fences+",        "id": "limbo666/DesktopFences",       "manager": "github", "_note": "Portable app — downloaded from GitHub releases, no installer" }
+      ]
+    },
+    "dev-environment": {
+      "description": "Minimalist dev stack: tiling WM, terminal, file managers, CLI tools",
+      "apps": [
+        { "name": "komorebi",              "id": "LGUG2Z.komorebi",              "manager": "winget", "_note": "Tiling window manager (free for personal use)" },
+        { "name": "whkd",                  "id": "LGUG2Z.whkd",                  "manager": "winget", "_note": "Hotkey daemon for komorebi" },
+        { "name": "yasb",                  "id": "AmN.yasb",                     "manager": "winget", "_note": "Status bar with komorebi integration" },
+        { "name": "WezTerm",               "id": "wez.wezterm",                  "manager": "winget", "_note": "GPU terminal with built-in multiplexer" },
+        { "name": "Files",                 "id": "Files-Community.Files",        "manager": "winget", "_note": "Modern file explorer" },
+        { "name": "Sysinternals Suite",    "id": "Microsoft.Sysinternals.Suite", "manager": "winget" },
+        { "name": "ripgrep",               "id": "ripgrep",                      "manager": "scoop" },
+        { "name": "fd",                    "id": "fd",                           "manager": "scoop" },
+        { "name": "fzf",                   "id": "fzf",                          "manager": "scoop" },
+        { "name": "bat",                   "id": "bat",                          "manager": "scoop" },
+        { "name": "eza",                   "id": "eza",                          "manager": "scoop" },
+        { "name": "jq",                    "id": "jq",                           "manager": "scoop" },
+        { "name": "vim",                   "id": "vim",                          "manager": "scoop" },
+        { "name": "zoxide",                "id": "zoxide",                       "manager": "scoop" },
+        { "name": "starship",              "id": "starship",                     "manager": "scoop" },
+        { "name": "yazi",                  "id": "yazi",                         "manager": "scoop", "_note": "TUI file manager — needs WezTerm for image previews" },
+        { "name": "JetBrainsMono Nerd Font", "id": "JetBrainsMono-NF",           "manager": "scoop", "_note": "Required by eza/starship icons; from nerd-fonts bucket" }
       ]
     },
     "mail-and-passwords": {
