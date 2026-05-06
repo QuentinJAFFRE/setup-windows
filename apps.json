@@ -60,6 +60,7 @@
         { "name": "zoxide",                "id": "zoxide",                       "manager": "scoop" },
         { "name": "starship",              "id": "starship",                     "manager": "scoop" },
         { "name": "yazi",                  "id": "yazi",                         "manager": "scoop", "_note": "TUI file manager — needs WezTerm for image previews" },
+        { "name": "file",                  "id": "file",                         "manager": "scoop", "_note": "MIME type detector required by yazi on Windows" },
         { "name": "JetBrainsMono Nerd Font", "id": "JetBrainsMono-NF",           "manager": "scoop", "_note": "Required by eza/starship icons; from nerd-fonts bucket" }
       ]
     },
