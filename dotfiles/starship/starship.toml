@@ -47,6 +47,9 @@ deleted = "✘$count "
 
 # -- Languages (only show in relevant projects) --------------------------------
 [python]
+# Skip Windows Store stub (`%LOCALAPPDATA%\Microsoft\WindowsApps\python.exe`).
+# Stub prints localized error to stderr in non-UTF8 (cp1252) → starship warns.
+python_binary = ["py"]
 format = '[($virtualenv )(\($version\))]($style) '
 style = "bold yellow"
 detect_extensions = ["py"]

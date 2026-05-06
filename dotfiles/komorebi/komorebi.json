@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/master/schema.json",
+  "app_specific_configuration_path": "$Env:USERPROFILE\\.config\\komorebi\\applications.json",
+  "window_hiding_behaviour": "Cloak",
+  "cross_monitor_move_behaviour": "Insert",
+  "default_workspace_padding": 8,
+  "default_container_padding": 8,
+  "border": true,
+  "border_width": 2,
+  "border_offset": -1,
+  "border_colours": {
+    "single": "#7aa2f7",
+    "stack":  "#bb9af7",
+    "monocle":"#f7768e",
+    "unfocused":"#414868"
+  },
+  "stackbar": {
+    "height": 28,
+    "mode": "OnStack",
+    "tabs": {
+      "width": 220,
+      "focused_text":   "#1a1b26",
+      "unfocused_text": "#c0caf5",
+      "background":     "#1a1b26"
+    }
+  },
+  "animation": {
+    "enabled": true,
+    "duration": 180,
+    "fps": 60,
+    "style": "EaseOutQuad"
+  },
+  "monitors": [
+    {
+      "workspaces": [
+        { "name": "1-web",     "layout": "BSP" },
+        { "name": "2-code",    "layout": "BSP" },
+        { "name": "3-term",    "layout": "BSP" },
+        { "name": "4-chat",    "layout": "Columns" },
+        { "name": "5-media",   "layout": "BSP" },
+        { "name": "6",         "layout": "BSP" },
+        { "name": "7",         "layout": "BSP" },
+        { "name": "8",         "layout": "BSP" },
+        { "name": "9-mon",     "layout": "Rows" }
+      ]
+    }
+  ]
+}

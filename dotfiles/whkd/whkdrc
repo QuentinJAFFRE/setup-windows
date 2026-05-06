@@ -1,0 +1,99 @@
+.shell cmd
+
+# ============================================================
+# whkd — komorebi hotkeys (Alt-based, i3-style)
+# Reload after edit:  komorebic reload-configuration
+# Debug missed keys:  whkd --debug
+#
+# Shell = cmd so komorebic runs direct (no pwsh -c spawn per
+# keypress). Workspace switching needs to be instant.
+# ============================================================
+
+# --- App launchers --------------------------------------------------
+alt + return            : start "" "wezterm-gui.exe"
+alt + shift + return    : start "" "msedge.exe"
+alt + o                 : start "" "explorer.exe"
+
+# --- Window focus (h/j/k/l) ----------------------------------------
+alt + h                 : komorebic focus left
+alt + j                 : komorebic focus down
+alt + k                 : komorebic focus up
+alt + l                 : komorebic focus right
+
+# --- Window move ---------------------------------------------------
+alt + shift + h         : komorebic move left
+alt + shift + j         : komorebic move down
+alt + shift + k         : komorebic move up
+alt + shift + l         : komorebic move right
+
+# --- Window state --------------------------------------------------
+alt + q                 : komorebic close
+alt + f                 : komorebic toggle-float
+alt + m                 : komorebic toggle-monocle
+alt + t                 : komorebic toggle-tiling
+alt + shift + space     : komorebic toggle-pause
+
+# --- Resize --------------------------------------------------------
+alt + minus             : komorebic resize-axis horizontal decrease
+alt + equal             : komorebic resize-axis horizontal increase
+alt + shift + minus     : komorebic resize-axis vertical decrease
+alt + shift + equal     : komorebic resize-axis vertical increase
+
+# --- Layouts -------------------------------------------------------
+alt + shift + b         : komorebic change-layout bsp
+alt + shift + c         : komorebic change-layout columns
+alt + shift + r         : komorebic change-layout rows
+alt + shift + v         : komorebic change-layout vertical-stack
+alt + shift + g         : komorebic change-layout horizontal-stack
+alt + shift + u         : komorebic change-layout ultrawide-vertical-stack
+
+# --- Stacks --------------------------------------------------------
+alt + bracketright      : komorebic cycle-stack next
+alt + bracketleft       : komorebic cycle-stack previous
+alt + ctrl + h          : komorebic stack left
+alt + ctrl + j          : komorebic stack down
+alt + ctrl + k          : komorebic stack up
+alt + ctrl + l          : komorebic stack right
+alt + ctrl + u          : komorebic unstack
+
+# --- Monitors ------------------------------------------------------
+alt + comma             : komorebic focus-monitor 0
+alt + period            : komorebic focus-monitor 1
+alt + shift + comma     : komorebic move-to-monitor 0
+alt + shift + period    : komorebic move-to-monitor 1
+
+# --- Workspace cycling (prev/next) ---------------------------------
+alt + tab               : komorebic cycle-workspace next
+alt + shift + tab       : komorebic cycle-workspace previous
+
+# --- Workspaces (focus) --------------------------------------------
+alt + 1                 : komorebic focus-workspace 0
+alt + 2                 : komorebic focus-workspace 1
+alt + 3                 : komorebic focus-workspace 2
+alt + 4                 : komorebic focus-workspace 3
+alt + 5                 : komorebic focus-workspace 4
+alt + 6                 : komorebic focus-workspace 5
+alt + 7                 : komorebic focus-workspace 6
+alt + 8                 : komorebic focus-workspace 7
+alt + 9                 : komorebic focus-workspace 8
+
+# --- Workspaces (move window to) -----------------------------------
+alt + shift + 1         : komorebic move-to-workspace 0
+alt + shift + 2         : komorebic move-to-workspace 1
+alt + shift + 3         : komorebic move-to-workspace 2
+alt + shift + 4         : komorebic move-to-workspace 3
+alt + shift + 5         : komorebic move-to-workspace 4
+alt + shift + 6         : komorebic move-to-workspace 5
+alt + shift + 7         : komorebic move-to-workspace 6
+alt + shift + 8         : komorebic move-to-workspace 7
+alt + shift + 9         : komorebic move-to-workspace 8
+
+# --- Send window to workspace AND follow ---------------------------
+alt + ctrl + 1          : komorebic send-to-workspace 0
+alt + ctrl + 2          : komorebic send-to-workspace 1
+alt + ctrl + 3          : komorebic send-to-workspace 2
+alt + ctrl + 4          : komorebic send-to-workspace 3
+alt + ctrl + 5          : komorebic send-to-workspace 4
+
+# --- Reload --------------------------------------------------------
+alt + shift + o         : komorebic reload-configuration

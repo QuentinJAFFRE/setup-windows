@@ -24,6 +24,7 @@
       "apps": [
         { "name": "PyCharm Professional",  "id": "JetBrains.PyCharm",            "manager": "winget" },
         { "name": "Cursor",                "id": "Anysphere.Cursor",             "manager": "winget" },
+        { "name": "Python 3.12",           "id": "Python.Python.3.12",           "manager": "winget", "_note": "Real CPython — shadows the Windows Store stub on PATH" },
         { "name": "pyenv-win",             "id": "pyenv-win",                    "manager": "choco" },
         { "name": "Claude Desktop",        "id": "Anthropic.Claude",             "manager": "winget" },
         { "name": "Claude Code",           "id": "Anthropic.ClaudeCode",         "manager": "winget" },

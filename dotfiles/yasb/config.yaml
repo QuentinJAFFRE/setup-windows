@@ -1,0 +1,126 @@
+# yasb — status bar
+# Deployed to %USERPROFILE%\.config\yasb\config.yaml
+# Styling lives in styles.css alongside this file.
+
+watch_stylesheet: true
+watch_config: true
+debug: false
+
+bars:
+  primary-bar:
+    enabled: true
+    screens: ['*']
+    class_name: "yasb-bar"
+    alignment:
+      position: "top"
+      center: false
+    blur_effect:
+      enabled: true
+      acrylic: true
+      dark_mode: true
+      round_corners: true
+      round_corners_type: "small"
+      border_color: "#7aa2f7"
+    window_flags:
+      always_on_top: false
+      windows_app_bar: true
+    dimensions:
+      width: "100%"
+      height: 36
+    padding:
+      top: 4
+      left: 10
+      bottom: 4
+      right: 10
+    widgets:
+      left:   ["komorebi_workspaces", "komorebi_active_layout", "active_window"]
+      center: ["clock"]
+      right:  ["cpu", "memory", "battery", "wifi", "volume"]
+
+widgets:
+  komorebi_workspaces:
+    type: "yasb.komorebi_workspaces.KomorebiWorkspacesWidget"
+    options:
+      label_offline: "  komorebi offline"
+      label_workspace_btn: "{index}"
+      label_workspace_active_btn: " {index}"
+      label_workspace_populated_btn: " {index}"
+      label_default_name: "{index}"
+      label_zero_index: false
+      hide_empty_workspaces: false
+      container_padding:
+        top: 0
+        left: 6
+        bottom: 0
+        right: 6
+
+  komorebi_active_layout:
+    type: "yasb.komorebi_active_layout.KomorebiActiveLayoutWidget"
+    options:
+      hide_if_offline: true
+      label: " {icon}"
+      layouts: ['bsp','columns','rows','vertical_stack','horizontal_stack','ultrawide_vertical_stack','grid']
+      layout_icons:
+        bsp:                       "BSP"
+        columns:                   "COL"
+        rows:                      "ROW"
+        vertical_stack:            "V-STK"
+        horizontal_stack:          "H-STK"
+        ultrawide_vertical_stack:  "UW"
+        grid:                      "GRID"
+        monocle:                   "MONO"
+        maximised:                 "MAX"
+        floating:                  "FLOAT"
+        paused:                    "PAUSED"
+
+  active_window:
+    type: "yasb.active_window.ActiveWindowWidget"
+    options:
+      label: "  {win[title]}"
+      label_alt: "[class={win[class_name]} exe={win[process][name]}]"
+      max_length: 70
+      max_length_ellipsis: "…"
+      monitor_exclusive: true
+
+  clock:
+    type: "yasb.clock.ClockWidget"
+    options:
+      label: "  {%a %d %b · %H:%M}"
+      label_alt: "  {%Y-%m-%d %H:%M:%S}"
+      timezones: []
+
+  cpu:
+    type: "yasb.cpu.CpuWidget"
+    options:
+      label: "  {info[percent][total]}%"
+      label_alt: "  {info[percent][total]}% ({info[freq][current]}MHz)"
+      update_interval: 2000
+
+  memory:
+    type: "yasb.memory.MemoryWidget"
+    options:
+      label: "  {virtual_mem_percent}%"
+      label_alt: "  {virtual_mem_used}/{virtual_mem_total}"
+      update_interval: 5000
+
+  battery:
+    type: "yasb.battery.BatteryWidget"
+    options:
+      label: "  {percent}%"
+      label_alt: "{percent}% · {time_remaining}"
+      update_interval: 30000
+      charging_options:
+        icon_format: " {icon}"
+
+  wifi:
+    type: "yasb.wifi.WifiWidget"
+    options:
+      label: "  {wifi_strength}%"
+      label_alt: "{wifi_name} {wifi_strength}%"
+      update_interval: 10000
+
+  volume:
+    type: "yasb.volume.VolumeWidget"
+    options:
+      label: "  {level}%"
+      label_alt: "{level}%"

@@ -1,0 +1,107 @@
+/* yasb — Tokyo Night Storm
+ * Deployed to %USERPROFILE%\.config\yasb\styles.css
+ * Palette:
+ *   bg        #1a1b26
+ *   bg-alt    #24283b
+ *   surface   #2f334d
+ *   border    #3b4261
+ *   fg        #c0caf5
+ *   muted     #565f89
+ *   blue      #7aa2f7
+ *   purple    #bb9af7
+ *   cyan      #7dcfff
+ *   green     #9ece6a
+ *   yellow    #e0af68
+ *   red       #f7768e
+ *   pink      #ff9e64
+ */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "Segoe UI";
+    font-size: 12px;
+    font-weight: 500;
+    color: #c0caf5;
+}
+
+.yasb-bar {
+    background-color: rgba(26, 27, 38, 0.78);
+    border-bottom: 1px solid rgba(122, 162, 247, 0.35);
+}
+
+.widget {
+    padding: 0 10px;
+    margin: 2px 4px;
+    background-color: rgba(36, 40, 59, 0.65);
+    border: 1px solid rgba(59, 66, 97, 0.6);
+    border-radius: 8px;
+}
+
+.widget .label {
+    padding: 0 4px;
+}
+
+.widget.komorebi-workspaces {
+    padding: 0 4px;
+    background-color: rgba(36, 40, 59, 0.65);
+}
+
+.komorebi-workspaces .ws-btn {
+    padding: 2px 10px;
+    margin: 2px 2px;
+    background-color: transparent;
+    color: #565f89;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    min-width: 20px;
+}
+
+.komorebi-workspaces .ws-btn:hover {
+    background-color: rgba(122, 162, 247, 0.15);
+    color: #c0caf5;
+}
+
+.komorebi-workspaces .ws-btn.populated {
+    color: #7dcfff;
+    border-color: rgba(125, 207, 255, 0.35);
+}
+
+.komorebi-workspaces .ws-btn.active {
+    color: #1a1b26;
+    background-color: #7aa2f7;
+    border-color: #7aa2f7;
+    font-weight: 700;
+}
+
+.widget.komorebi-active-layout {
+    color: #bb9af7;
+    background-color: rgba(187, 154, 247, 0.10);
+    border-color: rgba(187, 154, 247, 0.35);
+}
+
+.widget.active-window {
+    color: #c0caf5;
+    background-color: transparent;
+    border-color: transparent;
+    font-weight: 400;
+}
+
+.widget.clock {
+    color: #c0caf5;
+    background-color: rgba(122, 162, 247, 0.12);
+    border-color: rgba(122, 162, 247, 0.35);
+    font-weight: 600;
+}
+
+.widget.cpu-widget    { color: #f7768e; }
+.widget.memory-widget { color: #e0af68; }
+.widget.battery-widget { color: #9ece6a; }
+.widget.wifi-widget   { color: #7dcfff; }
+.widget.volume-widget { color: #ff9e64; }
+
+.widget.cpu-widget:hover,
+.widget.memory-widget:hover,
+.widget.battery-widget:hover,
+.widget.wifi-widget:hover,
+.widget.volume-widget:hover {
+    background-color: rgba(122, 162, 247, 0.18);
+}
