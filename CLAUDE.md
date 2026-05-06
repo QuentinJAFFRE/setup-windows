@@ -4,10 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a Windows PC setup automation toolkit. A single `apps.json` configuration drives three PowerShell scripts:
+This is a Windows PC setup automation toolkit. A single `apps.json` configuration drives four PowerShell scripts:
 1. `setup-apps.ps1` — installs winget/choco/github apps (admin)
 2. `setup-scoop.ps1` — installs scoop apps (non-admin; scoop refuses elevation)
-3. `setup-desktop.ps1` — organizes the desktop using Desktop Fences+
+3. `setup-env-shell.ps1` — deploys shell/env/PATH configuration (dotfiles → user profile)
+4. `setup-desktop.ps1` — organizes the desktop using Desktop Fences+
 
 A minimalist developer stack (komorebi tiling WM, WezTerm, yazi, Nerd Fonts, CLI tools) lives in the `dev-environment` category. Per-tool cheat sheets are in `docs/cheatsheets/`.
 
@@ -20,9 +21,13 @@ A minimalist developer stack (komorebi tiling WM, WezTerm, yazi, Nerd Fonts, CLI
 # 2. Install scoop apps (must be a NON-admin shell)
 .\setup-scoop.ps1
 
+# 3. Deploy shell/env config (dotfiles → user profile)
+.\setup-env-shell.ps1
+
 # Preview without installing
 .\setup-apps.ps1 -DryRun
 .\setup-scoop.ps1 -DryRun
+.\setup-env-shell.ps1 -DryRun
 
 # Install specific categories only
 .\setup-apps.ps1 -Categories "dev-environment","dev-tools"
@@ -73,7 +78,11 @@ Each app entry specifies:
 2. Verifies scoop is installed
 3. Adds `extras` and `nerd-fonts` buckets if missing
 4. Installs every `scoop`-managed app from `apps.json` that isn't already installed
-5. Deploys dotfiles from `.\dotfiles\` into the user profile (PowerShell `$PROFILE`, starship config, yazi config). Pass `-NoConfig` to skip.
+
+**`setup-env-shell.ps1`** flow:
+1. Reads `.\dotfiles\` (source of truth)
+2. Copies each entry to its user-profile target (`$PROFILE`, `~\.config\starship.toml`, `%APPDATA%\yazi\config\*`, `~\.wezterm.lua` if present)
+3. Creates parent dirs as needed; idempotent (overwrites). Run after `setup-scoop.ps1`.
 
 **`setup-desktop.ps1`** flow:
 1. Reads `apps.json` for category/app structure

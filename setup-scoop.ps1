@@ -1,7 +1,6 @@
 <#
 .SYNOPSIS
-    Installs Scoop-managed apps from apps.json AND deploys user dotfiles.
-    Must run in a non-admin shell.
+    Installs Scoop-managed apps from apps.json. Must run in a non-admin shell.
 
 .DESCRIPTION
     Scoop refuses elevated installs by design. setup-apps.ps1 self-elevates
@@ -11,21 +10,18 @@
     manager is "scoop" and which is not yet installed. Adds required buckets
     (extras, nerd-fonts) on first run.
 
-    After installs, deploys dotfiles from .\dotfiles\ to the user profile
-    (PowerShell $PROFILE, starship config, yazi config). Pass -NoConfig to
-    skip this step.
+    Shell/env/PATH configuration lives in setup-env-shell.ps1 — run it after
+    this script.
 
 .USAGE
     .\setup-scoop.ps1
     .\setup-scoop.ps1 -DryRun
-    .\setup-scoop.ps1 -NoConfig                 # skip dotfile deploy
     .\setup-scoop.ps1 -ConfigPath "C:\path\to\apps.json"
     .\setup-scoop.ps1 -Categories "dev-environment"
 #>
 
 param(
     [switch]$DryRun,
-    [switch]$NoConfig,
     [string]$ConfigPath = ".\apps.json",
     [string[]]$Categories = @()
 )
@@ -176,70 +172,5 @@ if ($failed.Count -gt 0) {
     foreach ($a in $failed) { Write-Host "    x $($a.name)" -ForegroundColor Red }
 }
 Write-Host ""
-
-# -- Dotfiles deploy -----------------------------------------------------------
-# Mirrors .\dotfiles\* into user-profile locations. Idempotent: copies overwrite.
-
-if ($NoConfig) {
-    Write-Host "  -NoConfig set; skipping dotfile deploy." -ForegroundColor Yellow
-    return
-}
-
-$repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-$dotfilesDir = Join-Path $repoRoot "dotfiles"
-
-if (-not (Test-Path $dotfilesDir)) {
-    Write-Host "  No .\dotfiles\ directory found; skipping config deploy." -ForegroundColor Yellow
-    return
-}
-
-# (sourceRelativeToDotfiles, destinationAbsolute)
-$dotfileMap = @(
-    @{ src = "powershell\Microsoft.PowerShell_profile.ps1"; dst = $PROFILE },
-    @{ src = "starship\starship.toml";                       dst = "$env:USERPROFILE\.config\starship.toml" },
-    @{ src = "yazi\yazi.toml";                               dst = "$env:APPDATA\yazi\config\yazi.toml" },
-    @{ src = "yazi\keymap.toml";                             dst = "$env:APPDATA\yazi\config\keymap.toml" }
-)
-
-Write-Host "  ========================================" -ForegroundColor Cyan
-Write-Host "          Deploying dotfiles               " -ForegroundColor Cyan
-Write-Host "  ========================================" -ForegroundColor Cyan
-
-$deployed = 0
-$skippedConfigs = 0
-
-foreach ($entry in $dotfileMap) {
-    $srcPath = Join-Path $dotfilesDir $entry.src
-    $dstPath = $entry.dst
-
-    if (-not (Test-Path $srcPath)) {
-        Write-Host "    [SKIP] source missing: $($entry.src)" -ForegroundColor DarkGray
-        $skippedConfigs++
-        continue
-    }
-
-    $dstDir = Split-Path $dstPath -Parent
-
-    if ($DryRun) {
-        Write-Host "    [DRY RUN] would deploy $($entry.src) -> $dstPath" -ForegroundColor Yellow
-        continue
-    }
-
-    if (-not (Test-Path $dstDir)) {
-        New-Item -ItemType Directory -Force -Path $dstDir | Out-Null
-    }
-    Copy-Item -Path $srcPath -Destination $dstPath -Force
-    Write-Host "    [OK] $($entry.src) -> $dstPath" -ForegroundColor Green
-    $deployed++
-}
-
+Write-Host "  Next: run .\setup-env-shell.ps1 to deploy shell/env config." -ForegroundColor Cyan
 Write-Host ""
-if (-not $DryRun) {
-    Write-Host "  Deployed $deployed file(s)." -ForegroundColor Green
-    if ($skippedConfigs -gt 0) {
-        Write-Host "  Skipped $skippedConfigs (source not present in dotfiles/)." -ForegroundColor DarkGray
-    }
-    Write-Host ""
-    Write-Host "  Open a fresh PowerShell window for `$PROFILE changes to take effect." -ForegroundColor Cyan
-    Write-Host ""
-}
