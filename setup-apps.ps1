@@ -6,8 +6,9 @@
     - Reads a JSON config file listing apps by category
     - Detects which apps are already installed (skips them)
     - Installs only what is missing
-    - Supports winget, Chocolatey, and GitHub releases (portable apps) as install sources
+    - Supports winget, Chocolatey, Scoop, and GitHub releases (portable apps) as install sources
     - Auto-installs Chocolatey if needed
+    - Scoop must be pre-installed by the user (it refuses elevated installs by design)
     - Dry-run mode, logging, and confirmation prompt
 
 .USAGE
@@ -130,6 +131,36 @@ if ($needsChoco -and -not (Test-Choco)) {
     Write-Log "Chocolatey detected."
 }
 
+# -- Ensure Scoop is available (cannot auto-install: must run as user) ---------
+function Test-Scoop {
+    try {
+        $null = Get-Command scoop -ErrorAction Stop
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+$needsScoop = $false
+foreach ($cat in $config.categories.PSObject.Properties) {
+    foreach ($app in $cat.Value.apps) {
+        if ($app.manager -eq "scoop") { $needsScoop = $true; break }
+    }
+    if ($needsScoop) { break }
+}
+
+if ($needsScoop -and -not (Test-Scoop)) {
+    Write-Log "ERROR: Scoop is required for some apps but is not installed." "Red"
+    Write-Log "       Scoop refuses elevated installs by design. Install it manually:" "Red"
+    Write-Log "       1. Open a NON-admin PowerShell window" "Red"
+    Write-Log "       2. Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser" "Red"
+    Write-Log "       3. irm get.scoop.sh | iex" "Red"
+    Write-Log "       Then re-run this script." "Red"
+    exit 1
+} elseif ($needsScoop) {
+    Write-Log "Scoop detected."
+}
+
 # -- Detection helpers ---------------------------------------------------------
 function Test-WingetInstalled {
     param([string]$PackageId)
@@ -142,6 +173,14 @@ function Test-ChocoInstalled {
     if (-not (Test-Choco)) { return $false }
     $result = choco list --exact $PackageId 2>$null
     return -not ($result | Select-String -Pattern "0 packages installed" -Quiet)
+}
+
+function Test-ScoopInstalled {
+    param([string]$PackageId)
+    if (-not (Test-Scoop)) { return $false }
+    # `scoop list <name>` prints the app row if installed, header-only if not.
+    $result = scoop list $PackageId 2>$null
+    return ($result | Select-String -Pattern "^$([regex]::Escape($PackageId))\s" -Quiet)
 }
 
 # -- GitHub portable app helpers -----------------------------------------------
@@ -213,6 +252,8 @@ foreach ($cat in $selectedCategories) {
             $installed = Test-WingetInstalled -PackageId $app.id
         } elseif ($app.manager -eq "choco") {
             $installed = Test-ChocoInstalled -PackageId $app.id
+        } elseif ($app.manager -eq "scoop") {
+            $installed = Test-ScoopInstalled -PackageId $app.id
         } elseif ($app.manager -eq "github") {
             $installed = Test-GitHubInstalled -RepoId $app.id
         }
@@ -270,6 +311,7 @@ if (-not $NoConfirm) {
 # -- Install -------------------------------------------------------------------
 $succeeded = @()
 $failed = @()
+$skipped = @()
 $total = $toInstall.Count
 $current = 0
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
@@ -297,6 +339,15 @@ foreach ($app in $toInstall) {
             Write-Host "" # newline
             Write-Host "    -> Installing via Chocolatey..." -ForegroundColor DarkCyan
             & choco install $app.id -y
+
+        } elseif ($app.manager -eq "scoop") {
+            # Scoop refuses elevated installs by design, and this script
+            # self-elevated. Skip here; setup-scoop.ps1 handles these in a
+            # non-admin session.
+            Write-Host "    [SKIP] $($app.name) -- scoop apps must be installed via setup-scoop.ps1 (non-admin)" -ForegroundColor Yellow
+            Write-Log "  [SKIP] $($app.name) -- run setup-scoop.ps1" "Yellow"
+            $skipped += $app
+            continue
 
         } elseif ($app.manager -eq "github") {
             Write-Host "" # newline
@@ -349,6 +400,15 @@ Write-Log "Succeeded : $($succeeded.Count) / $total" "Green"
 Write-Host "  Succeeded : $($succeeded.Count) / $total" -ForegroundColor Green
 foreach ($app in $succeeded) { Write-Log "  + $($app.name)" "Green" }
 
+if ($skipped.Count -gt 0) {
+    Write-Log "Skipped   : $($skipped.Count) / $total (run setup-scoop.ps1 for these)" "Yellow"
+    Write-Host "  Skipped   : $($skipped.Count) / $total (scoop, non-admin)" -ForegroundColor Yellow
+    foreach ($app in $skipped) {
+        Write-Log "  ~ $($app.name)" "Yellow"
+        Write-Host "    ~ $($app.name)" -ForegroundColor Yellow
+    }
+}
+
 if ($failed.Count -gt 0) {
     Write-Log "Failed    : $($failed.Count) / $total" "Red"
     Write-Host "  Failed    : $($failed.Count) / $total" -ForegroundColor Red
@@ -358,8 +418,13 @@ if ($failed.Count -gt 0) {
     }
     Write-Host ""
     Write-Host "  Tip: Re-run the script to retry failed installs." -ForegroundColor Yellow
-} else {
+} elseif ($skipped.Count -eq 0) {
     Write-Log "All $total apps installed successfully!" "Green"
+}
+
+if ($skipped.Count -gt 0) {
+    Write-Host ""
+    Write-Host "  Next: open a NON-admin PowerShell and run .\setup-scoop.ps1" -ForegroundColor Cyan
 }
 
 Write-Log "Log saved to $LogFile"

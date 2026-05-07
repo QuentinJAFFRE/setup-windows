@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "Bash(winget uninstall *)"
+      "Bash(winget uninstall *)",
+      "Bash(komorebic state *)",
+      "PowerShell(Copy-Item \"$PWD\\\\dotfiles\\\\whkd\\\\whkdrc\" \"$env:USERPROFILE\\\\.config\\\\whkdrc\" -Force; $p = Start-Process whkd.exe -PassThru -RedirectStandardError \"$env:TEMP\\\\whkd-err.txt\"; Start-Sleep 2; if \\(Get-Process -Id $p.Id -ErrorAction SilentlyContinue\\) { \"whkd alive id=$\\($p.Id\\)\"; Stop-Process -Id $p.Id -Force } else { \"DIED:\"; Get-Content \"$env:TEMP\\\\whkd-err.txt\" })",
+      "PowerShell(Get-Process komorebi,whkd,yasb,komorebi-bar -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue; Start-Sleep 1; $env:KOMOREBI_CONFIG_HOME = \"$env:USERPROFILE\\\\.config\\\\komorebi\"; & komorebic.exe start --whkd --bar 2>&1 | Select-Object -Last 5; Start-Sleep 3; Get-Process komorebi,whkd,yasb,komorebi-bar -ErrorAction SilentlyContinue | Select-Object Name, Id | Format-Table)",
+      "PowerShell($min = '{\"$schema\":\"https://raw.githubusercontent.com/LGUG2Z/komorebi/master/schema.json\",\"monitors\":[{\"workspaces\":[{\"name\":\"1\",\"layout\":\"BSP\"}]}]}'; [System.IO.File]::WriteAllText\\(\"$env:USERPROFILE\\\\.config\\\\komorebi\\\\komorebi.json\", $min, \\(New-Object System.Text.UTF8Encoding $false\\)\\); $env:KOMOREBI_CONFIG_HOME = \"$env:USERPROFILE\\\\.config\\\\komorebi\"; & komorebi.exe 2>&1 | Out-String)",
+      "PowerShell(Get-Process komorebi,komorebi-bar,whkd -ErrorAction SilentlyContinue)"
     ]
   }
 }

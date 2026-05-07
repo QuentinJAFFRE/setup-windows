@@ -1,0 +1,84 @@
+# ~\.config\starship.toml
+# Minimalist prompt. No Nerd Font icons yet — turn them on once WezTerm is using
+# JetBrainsMono Nerd Font (set `add_newline = true` and uncomment icon lines).
+
+# Two-line prompt: line 1 = context, line 2 = just the prompt char.
+add_newline = true
+command_timeout = 1000
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$python\
+$nodejs\
+$rust\
+$golang\
+$cmd_duration\
+$line_break\
+$character"""
+
+# -- Directory -----------------------------------------------------------------
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+style = "bold cyan"
+
+# -- Git -----------------------------------------------------------------------
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = ""
+style = "bold purple"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "yellow"
+conflicted = "=$count "
+ahead = "↑$count "
+behind = "↓$count "
+diverged = "↕↑$ahead_count↓$behind_count "
+untracked = "?$count "
+stashed = "$$count "
+modified = "*$count "
+staged = "+$count "
+renamed = "»$count "
+deleted = "✘$count "
+
+# -- Languages (only show in relevant projects) --------------------------------
+[python]
+# Skip Windows Store stub (`%LOCALAPPDATA%\Microsoft\WindowsApps\python.exe`).
+# Stub prints localized error to stderr in non-UTF8 (cp1252) → starship warns.
+python_binary = ["py"]
+format = '[($virtualenv )(\($version\))]($style) '
+style = "bold yellow"
+detect_extensions = ["py"]
+detect_files = ["pyproject.toml", "requirements.txt", "setup.py", ".python-version", "uv.lock"]
+
+[nodejs]
+format = '[($version)]($style) '
+style = "bold green"
+detect_extensions = []
+detect_files = ["package.json", ".nvmrc"]
+
+[rust]
+format = '[($version)]($style) '
+style = "bold red"
+detect_files = ["Cargo.toml"]
+
+[golang]
+format = '[($version)]($style) '
+style = "bold blue"
+detect_files = ["go.mod", "go.sum"]
+
+# -- Command duration (only when slow) -----------------------------------------
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration]($style) "
+style = "bold yellow"
+
+# -- Prompt character ----------------------------------------------------------
+[character]
+success_symbol = "[›](bold green)"
+error_symbol = "[›](bold red)"
+vimcmd_symbol = "[‹](bold green)"

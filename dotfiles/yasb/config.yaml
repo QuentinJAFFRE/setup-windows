@@ -1,0 +1,260 @@
+watch_stylesheet: true
+watch_config: true
+debug: false
+update_check: true
+
+bars:
+  primary-bar:
+    enabled: true
+    screens: ['*']
+    class_name: "yasb-bar"
+    alignment:
+      position: "top"
+      center: false
+    animation:
+      enabled: true
+      duration: 400
+    blur_effect:
+      enabled: true
+      acrylic: false
+      dark_mode: false
+      round_corners: false
+      round_corners_type: "normal"
+      border_color: "system"
+    window_flags:
+      always_on_top: false
+      windows_app_bar: true
+    dimensions:
+      width: "100%"
+      height: 32
+    padding:
+      top: 0
+      left: 0
+      bottom: 0
+      right: 0
+    widgets:
+      left:
+        - "home"
+        - "komorebi_workspaces"
+        - "komorebi_active_layout"
+        - "active_window"
+      center:
+        - "clock"
+      right:
+        - "systray"
+        - "cpu"
+        - "memory"
+        - "volume"
+        - "wifi"
+        - "battery"
+        - "notifications"
+        - "power_menu"
+
+widgets:
+  home:
+    type: "yasb.home.HomeWidget"
+    options:
+      label: "<span></span>"
+      menu_list:
+        - { title: "User Home", path: "~" }
+        - { title: "Downloads", path: "~\\Downloads" }
+        - { title: "Documents", path: "~\\Documents" }
+        - { title: "Pictures",  path: "~\\Pictures" }
+      system_menu: true
+      power_menu: true
+      blur: true
+      round_corners: true
+      round_corners_type: "normal"
+      border_color: "System"
+      alignment: "center"
+
+  komorebi_workspaces:
+    type: "yasb.komorebi_workspaces.KomorebiWorkspacesWidget"
+    options:
+      label_offline: "komorebi offline"
+      label_workspace_btn: "{index}"
+      label_workspace_active_btn: "{index}"
+      label_workspace_populated_btn: "{index}"
+      label_default_name: "{index}"
+      label_zero_index: false
+      hide_empty_workspaces: false
+      container_padding:
+        top: 0
+        left: 4
+        bottom: 0
+        right: 4
+
+  komorebi_active_layout:
+    type: "yasb.komorebi_active_layout.KomorebiActiveLayoutWidget"
+    options:
+      hide_if_offline: true
+      label: "{icon}"
+      layouts: ['bsp','columns','rows','vertical_stack','horizontal_stack','ultrawide_vertical_stack','grid']
+      layout_icons:
+        bsp:                       "BSP"
+        columns:                   "COL"
+        rows:                      "ROW"
+        vertical_stack:            "V-STK"
+        horizontal_stack:          "H-STK"
+        ultrawide_vertical_stack:  "UW"
+        grid:                      "GRID"
+        monocle:                   "MONO"
+        maximised:                 "MAX"
+        floating:                  "FLOAT"
+        paused:                    "PAUSED"
+
+  active_window:
+    type: "yasb.active_window.ActiveWindowWidget"
+    options:
+      label: "{win[title]}"
+      label_alt: "[class={win[class_name]} exe={win[process][name]}]"
+      max_length: 60
+      max_length_ellipsis: "…"
+      monitor_exclusive: true
+
+  clock:
+    type: "yasb.clock.ClockWidget"
+    options:
+      label: "{%a, %d %b  %H:%M}"
+      label_alt: "{%A, %d %B %Y  %H:%M}"
+      timezones: []
+      calendar:
+        blur: true
+        round_corners: true
+        alignment: "center"
+        direction: "down"
+        extended: false
+        show_years: true
+        show_holidays: false
+        show_week_numbers: true
+      callbacks:
+        on_left: "toggle_calendar"
+        on_middle: "toggle_label"
+        on_right: "context_menu"
+
+  systray:
+    type: yasb.systray.SystrayWidget
+    options:
+      class_name: systray
+      label_collapsed: ""
+      label_expanded: ""
+      label_position: right
+      pin_click_modifier: ctrl
+      show_unpinned: false
+      show_battery: false
+      show_volume: false
+      icon_size: 16
+      use_hook: true
+      show_in_popup: true
+      icons_per_row: 5
+      popup:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: None
+        alignment: "center"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+
+  cpu:
+    type: "yasb.cpu.CpuWidget"
+    options:
+      label: "<span></span> {info[percent][total]}%"
+      label_alt: "<span></span> {info[freq][current]} MHz"
+      update_interval: 2000
+      menu:
+        enabled: true
+        show_graph: true
+        show_graph_grid: true
+        graph_history_size: 60
+      callbacks:
+        on_left: toggle_menu
+        on_middle: do_nothing
+        on_right: toggle_label
+
+  memory:
+    type: "yasb.memory.MemoryWidget"
+    options:
+      label: "<span></span> {virtual_mem_percent}%"
+      label_alt: "<span></span> VIRT {virtual_mem_percent}% SWAP {swap_mem_percent}%"
+      update_interval: 5000
+      callbacks:
+        on_left: "toggle_menu"
+        on_middle: "do_nothing"
+        on_right: "toggle_label"
+      menu:
+        enabled: true
+        show_graph: true
+        show_graph_grid: true
+        graph_history_size: 60
+
+  volume:
+    type: "yasb.volume.VolumeWidget"
+    options:
+      label: "<span>{icon}</span>"
+      label_alt: "<span>{icon}</span> {level}"
+      tooltip: true
+      volume_icons:
+        - ""
+        - ""
+        - ""
+        - ""
+        - ""
+      callbacks:
+        on_left: "toggle_volume_menu"
+        on_right: "toggle_mute"
+
+  wifi:
+    type: "yasb.wifi.WifiWidget"
+    options:
+      label: "<span></span>"
+      label_alt: "<span></span> {wifi_name} {wifi_strength}%"
+      update_interval: 10000
+
+  battery:
+    type: "yasb.battery.BatteryWidget"
+    options:
+      label: "<span></span> {percent}%"
+      label_alt: "<span></span> {percent}% · {time_remaining}"
+      update_interval: 30000
+      charging_options:
+        icon_format: " {icon}"
+
+  notifications:
+    type: "yasb.notifications.NotificationsWidget"
+    options:
+      label: "<span></span>"
+      label_alt: "{count} notifications"
+      hide_empty: true
+      tooltip: false
+      callbacks:
+        on_left: "toggle_notification"
+        on_right: "do_nothing"
+        on_middle: "do_nothing"
+
+  power_menu:
+    type: "yasb.power_menu.PowerMenuWidget"
+    options:
+      label: "<span></span>"
+      uptime: true
+      show_user: true
+      menu_style: "popup"
+      popup:
+        blur: true
+        round_corners: true
+        round_corners_type: "normal"
+        border_color: "System"
+        alignment: "right"
+        direction: "down"
+        offset_top: 6
+        offset_left: 0
+      profile_image_size: 64
+      buttons:
+        lock:      ["", "Lock"]
+        signout:   ["", "Sign out"]
+        sleep:     ["", "Sleep"]
+        hibernate: ["", "Hibernate"]
+        restart:   ["", "Restart"]
+        shutdown:  ["", "Shut Down"]
+        cancel:    ["", "Cancel"]

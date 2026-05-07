@@ -1,0 +1,9 @@
+/* yasb — minimal styles
+ * Custom UI styling intentionally removed; relying on yasb defaults.
+ * Deployed to %USERPROFILE%\.config\yasb\styles.css
+ */
+
+* {
+    font-size: 12px;
+    font-family: "Segoe UI", "Segoe Fluent Icons";
+}
