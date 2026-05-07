@@ -4,6 +4,36 @@
 
 Config lives in `%USERPROFILE%\.config\komorebi\komorebi.json` and `applications.json`. Start with `komorebic start --whkd --bar`.
 
+## Config files
+
+Two files in `$KOMOREBI_CONFIG_HOME` (= `%USERPROFILE%\.config\komorebi`):
+
+### `komorebi.json` — your daemon config (checked into dotfiles)
+Defines monitors, workspaces, layouts, padding, borders, animation, stackbar, and the path to `applications.json`. Source of truth in `dotfiles/komorebi/komorebi.json`; `setup-env-shell.ps1` deploys it. Key fields:
+
+| Field | Purpose |
+|-------|---------|
+| `app_specific_configuration_path` | Path to `applications.json`. Use `$Env:KOMOREBI_CONFIG_HOME/applications.json`. |
+| `window_hiding_behaviour` | `Cloak` (recommended) hides off-workspace windows via DWM cloaking — invisible to alt-tab. `Hide`/`Minimize` are alternatives. |
+| `cross_monitor_move_behaviour` | `Insert` vs `Swap` when moving windows across monitors. |
+| `default_workspace_padding` / `default_container_padding` | Outer / inner gaps in pixels. |
+| `border` + `border_width` + `border_offset` + `border_colours` | Focused-window outline. `border_offset: -1` overlaps client edge by 1px so it sits flush. |
+| `stackbar` | Tab strip rendered when windows are stacked (`OnStack` shows only when ≥2 stacked). |
+| `animation` | `style` = `Linear`, `EaseOutQuad`, `EaseOutCubic`, etc. Disable on slow GPU. |
+| `monitors[].workspaces[]` | Per-workspace `name` + `layout` (`BSP`, `Columns`, `Rows`, `VerticalStack`, `HorizontalStack`, `UltrawideVerticalStack`). |
+
+Reload after edit: `komorebic reload-configuration`.
+
+### `applications.json` — per-app rules (fetched, not hand-written)
+Contains `manage_rules`, `float_rules`, `initial_workspace_rules`, `slow_application_compensation_time` entries for ~200 known apps. **Don't edit by hand.** `setup-env-shell.ps1` runs `komorebic fetch-asc` to download the latest community ruleset from [komorebi-application-specific-configuration](https://github.com/LGUG2Z/komorebi-application-specific-configuration). Re-fetch any time:
+
+```powershell
+komorebic fetch-asc
+komorebic reload-configuration
+```
+
+Add **personal** overrides directly inside `komorebi.json` (e.g. `workspace_rules`, `float_rules`) — those survive `fetch-asc` overwrites.
+
 ## 3 main use cases
 
 ### 1. Workspace-per-task focus

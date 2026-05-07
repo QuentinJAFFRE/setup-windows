@@ -35,9 +35,15 @@ Iterative install plan. One tool at a time: install → verify → customize →
   - [x] PATH wired (komorebi/whkd/yasb bin dirs in User PATH)
   - [x] Stack launched (`komorebic start --whkd --bar`)
   - [x] whkd shell switched to `cmd` (workspace switching was slow under `pwsh`)
-  - [x] yasb fancier bar — Nerd Font icons, Tokyo Night `styles.css`, 36px height, rounded pills
-  - [ ] Verify tiling + hotkeys (alt+1..9 workspace switch, alt+shift+N move) + bar render
+  - [x] yasb bar styling reverted to minimal (custom CSS dropped per feedback)
+  - [x] PowerToys FancyZones killed (was conflicting with komorebi keybinds + tiling)
+  - [x] whkdrc fixed for whkd 0.2+ key names (`oem_minus`/`oem_plus`/`oem_4`/`oem_6`/`oem_comma`/`oem_period`)
+  - [x] Autostart at logon: `komorebic enable-autostart --whkd --bar` wired into `setup-env-shell.ps1`; `KOMOREBI_CONFIG_HOME` set as User env var
+  - [x] applications.json migrated to v0.1.41 schema (rules moved into komorebi.json top-level)
+  - [ ] Disable FancyZones permanently in PowerToys Settings (auto-restarts otherwise)
+  - [ ] Verify after reboot: 9 workspaces in yasb, alt+1..9 focus, alt+shift+N move
   - [ ] Tune `applications.json` workspace assignments after real usage
+  - [ ] Known issue: local `komorebi.exe` restart fails w/ os error 1920 (stale AF_UNIX `komorebi.sock` reparse point in `%LOCALAPPDATA%\komorebi`); reboot clears it
 - [ ] **#4** Install Files + yazi, verify, customize
   - [x] yazi installed + customized
   - [ ] Files (winget `Files-Community.Files`) install + verify
@@ -60,3 +66,4 @@ Iterative install plan. One tool at a time: install → verify → customize →
 - 2026-05-06 — `file` utility added for yazi MIME (`fix:` commit)
 - 2026-05-06 — Dotfile deploy extracted into `setup-env-shell.ps1`
 - 2026-05-06 — komorebi + whkd + yasb stack launched; whkd shell→`cmd`, yasb Tokyo Night `styles.css`
+- 2026-05-06 — yasb restyled to AmN WinUI11 theme + komorebi workspace widget; FancyZones killed (conflict)

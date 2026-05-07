@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/master/schema.json",
-  "app_specific_configuration_path": "$Env:USERPROFILE\\.config\\komorebi\\applications.json",
+  "app_specific_configuration_path": "$Env:KOMOREBI_CONFIG_HOME/applications.json",
   "window_hiding_behaviour": "Cloak",
   "cross_monitor_move_behaviour": "Insert",
   "default_workspace_padding": 8,
@@ -33,15 +33,15 @@
   "monitors": [
     {
       "workspaces": [
-        { "name": "1-web",     "layout": "BSP" },
-        { "name": "2-code",    "layout": "BSP" },
-        { "name": "3-term",    "layout": "BSP" },
-        { "name": "4-chat",    "layout": "Columns" },
-        { "name": "5-media",   "layout": "BSP" },
-        { "name": "6",         "layout": "BSP" },
-        { "name": "7",         "layout": "BSP" },
-        { "name": "8",         "layout": "BSP" },
-        { "name": "9-mon",     "layout": "Rows" }
+        { "name": "1-web",   "layout": "BSP" },
+        { "name": "2-code",  "layout": "BSP" },
+        { "name": "3-term",  "layout": "BSP" },
+        { "name": "4-chat",  "layout": "Columns" },
+        { "name": "5-media", "layout": "BSP" },
+        { "name": "6",       "layout": "BSP" },
+        { "name": "7",       "layout": "BSP" },
+        { "name": "8",       "layout": "BSP" },
+        { "name": "9-mon",   "layout": "Rows" }
       ]
     }
   ]

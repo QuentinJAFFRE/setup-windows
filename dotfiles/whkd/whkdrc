@@ -34,10 +34,11 @@ alt + t                 : komorebic toggle-tiling
 alt + shift + space     : komorebic toggle-pause
 
 # --- Resize --------------------------------------------------------
-alt + minus             : komorebic resize-axis horizontal decrease
-alt + equal             : komorebic resize-axis horizontal increase
-alt + shift + minus     : komorebic resize-axis vertical decrease
-alt + shift + equal     : komorebic resize-axis vertical increase
+# Note: whkd 0.2+ uses OEM key names; `minus`/`equal` rejected.
+alt + oem_minus         : komorebic resize-axis horizontal decrease
+alt + oem_plus          : komorebic resize-axis horizontal increase
+alt + shift + oem_minus : komorebic resize-axis vertical decrease
+alt + shift + oem_plus  : komorebic resize-axis vertical increase
 
 # --- Layouts -------------------------------------------------------
 alt + shift + b         : komorebic change-layout bsp
@@ -48,8 +49,8 @@ alt + shift + g         : komorebic change-layout horizontal-stack
 alt + shift + u         : komorebic change-layout ultrawide-vertical-stack
 
 # --- Stacks --------------------------------------------------------
-alt + bracketright      : komorebic cycle-stack next
-alt + bracketleft       : komorebic cycle-stack previous
+alt + oem_6             : komorebic cycle-stack next       # ]
+alt + oem_4             : komorebic cycle-stack previous   # [
 alt + ctrl + h          : komorebic stack left
 alt + ctrl + j          : komorebic stack down
 alt + ctrl + k          : komorebic stack up
@@ -57,10 +58,10 @@ alt + ctrl + l          : komorebic stack right
 alt + ctrl + u          : komorebic unstack
 
 # --- Monitors ------------------------------------------------------
-alt + comma             : komorebic focus-monitor 0
-alt + period            : komorebic focus-monitor 1
-alt + shift + comma     : komorebic move-to-monitor 0
-alt + shift + period    : komorebic move-to-monitor 1
+alt + oem_comma         : komorebic focus-monitor 0
+alt + oem_period        : komorebic focus-monitor 1
+alt + shift + oem_comma : komorebic move-to-monitor 0
+alt + shift + oem_period: komorebic move-to-monitor 1
 
 # --- Workspace cycling (prev/next) ---------------------------------
 alt + tab               : komorebic cycle-workspace next

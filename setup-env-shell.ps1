@@ -12,7 +12,7 @@
       dotfiles\yazi\keymap.toml                             -> %APPDATA%\yazi\config\keymap.toml
       dotfiles\wezterm\.wezterm.lua                         -> ~\.wezterm.lua  (if present)
       dotfiles\komorebi\komorebi.json                       -> ~\.config\komorebi\komorebi.json
-      dotfiles\komorebi\applications.json                   -> ~\.config\komorebi\applications.json
+      (applications.json fetched at runtime via `komorebic fetch-asc`)
       dotfiles\whkd\whkdrc                                  -> ~\.config\whkdrc
       dotfiles\yasb\config.yaml                             -> ~\.config\yasb\config.yaml
       dotfiles\yasb\styles.css                              -> ~\.config\yasb\styles.css
@@ -58,9 +58,9 @@ $dotfileMap = @(
     @{ src = "starship\starship.toml";                       dst = "$env:USERPROFILE\.config\starship.toml";                required = $true  },
     @{ src = "yazi\yazi.toml";                               dst = "$env:APPDATA\yazi\config\yazi.toml";                    required = $true  },
     @{ src = "yazi\keymap.toml";                             dst = "$env:APPDATA\yazi\config\keymap.toml";                  required = $true  },
+    @{ src = "yazi\init.lua";                                dst = "$env:APPDATA\yazi\config\init.lua";                     required = $true  },
     @{ src = "wezterm\.wezterm.lua";                         dst = "$env:USERPROFILE\.wezterm.lua";                         required = $false },
     @{ src = "komorebi\komorebi.json";                       dst = "$env:USERPROFILE\.config\komorebi\komorebi.json";       required = $false },
-    @{ src = "komorebi\applications.json";                   dst = "$env:USERPROFILE\.config\komorebi\applications.json";   required = $false },
     @{ src = "whkd\whkdrc";                                  dst = "$env:USERPROFILE\.config\whkdrc";                       required = $false },
     @{ src = "yasb\config.yaml";                             dst = "$env:USERPROFILE\.config\yasb\config.yaml";             required = $false },
     @{ src = "yasb\styles.css";                              dst = "$env:USERPROFILE\.config\yasb\styles.css";              required = $false }
@@ -130,6 +130,61 @@ if (-not $DryRun -and $added.Count -gt 0) {
     foreach ($a in $added) {
         Write-Host "    [PATH+] $a" -ForegroundColor Green
     }
+}
+
+# ----------------------------------------------------------------------------
+# Register komorebi autostart (Startup folder shortcut managed by komorebic).
+# Generates komorebi.lnk in shell:startup with --whkd --bar and our config.
+# Idempotent: komorebic overwrites the shortcut each run.
+# ----------------------------------------------------------------------------
+$komorebicCmd = Get-Command komorebic.exe -ErrorAction SilentlyContinue
+$komoConfigDir = "$env:USERPROFILE\.config\komorebi"
+$komoConfig    = "$komoConfigDir\komorebi.json"
+
+# Set KOMOREBI_CONFIG_HOME durably (User env var). The Startup-folder shortcut
+# launched by Windows at logon does not load PowerShell profile, so this var
+# must live in the User env or komorebic.exe won't find komorebi.json.
+$existingHome = [Environment]::GetEnvironmentVariable("KOMOREBI_CONFIG_HOME", "User")
+if ($existingHome -ne $komoConfigDir) {
+    if ($DryRun) {
+        Write-Host "    [DRY RUN] would set User env KOMOREBI_CONFIG_HOME=$komoConfigDir" -ForegroundColor Yellow
+    } else {
+        [Environment]::SetEnvironmentVariable("KOMOREBI_CONFIG_HOME", $komoConfigDir, "User")
+        $env:KOMOREBI_CONFIG_HOME = $komoConfigDir
+        Write-Host "    [ENV+] KOMOREBI_CONFIG_HOME=$komoConfigDir" -ForegroundColor Green
+    }
+} else {
+    $env:KOMOREBI_CONFIG_HOME = $komoConfigDir
+}
+
+if ($komorebicCmd -and (Test-Path $komoConfig)) {
+    # Fetch community application-specific-configuration ruleset.
+    # Provides tiling rules for ~200 common apps (Electron, JetBrains, browsers, etc.)
+    # so apps like Claude/Discord/Spotify get managed instead of floating.
+    # Idempotent: overwrites $KOMOREBI_CONFIG_HOME\applications.json each run.
+    if ($DryRun) {
+        Write-Host "    [DRY RUN] would run: komorebic fetch-asc" -ForegroundColor Yellow
+    } else {
+        try {
+            & komorebic.exe fetch-asc | Out-Null
+            Write-Host "    [OK] applications.json fetched (community ruleset)" -ForegroundColor Green
+        } catch {
+            Write-Host "    [WARN] komorebic fetch-asc failed: $_" -ForegroundColor Yellow
+        }
+    }
+
+    if ($DryRun) {
+        Write-Host "    [DRY RUN] would run: komorebic enable-autostart --whkd --bar" -ForegroundColor Yellow
+    } else {
+        try {
+            & komorebic.exe enable-autostart --whkd --bar | Out-Null
+            Write-Host "    [OK] komorebi autostart registered (Startup folder shortcut)" -ForegroundColor Green
+        } catch {
+            Write-Host "    [WARN] komorebic enable-autostart failed: $_" -ForegroundColor Yellow
+        }
+    }
+} elseif (-not $komorebicCmd) {
+    Write-Host "    [SKIP] komorebic.exe not on PATH; autostart not registered" -ForegroundColor DarkGray
 }
 
 Write-Host ""
